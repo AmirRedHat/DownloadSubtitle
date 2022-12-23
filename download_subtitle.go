@@ -11,6 +11,7 @@ import (
 	// "time"
 	"net/http"
 	"flag"
+	
 	"github.com/gocolly/colly"
 )
 
@@ -57,14 +58,37 @@ func download_file(link string){
 	fmt.Println("download complete")
 }
 
+func string_replace(s string, old string, new string) string {
+	var new_string string;
+	for i:=0; i<len(s); i++{
+		letter := string(s[i])
+		if (letter == old){
+			new_string = strings.Replace(s, old, new, i)
+		}
+	}
+
+	return new_string
+}
+
 func main() {
-	
+
 	// url := "https://subtitlestar.com/persian-subtitles-wednesday/"
 	// var url string;
-	url := flag.String("url", "", "the link of page that you want crawl it")
+	url_addr := flag.String("url", "", "the link of page that you want crawl it")
+	name_addr := flag.String("movie", "", "the movie name")
 	flag.Parse()
-	if *url == ""{
-		log.Fatal("invalid url")
+	name := *name_addr;
+	url := *url_addr;
+
+	if (name == ""){
+		fmt.Println("The movie name is fucking empty");
+		os.Exit(0)
 	}
-	crawl(*url);
+	
+	name = string_replace(name, "_", "-")
+	fmt.Println(name)
+	if (url == ""){
+		url = fmt.Sprintf("https://subtitlestar.com/persian-subtitles-%s/", name)
+	}
+	crawl(url);
 }
