@@ -16,7 +16,26 @@ import (
 )
 
 
+func check_url(url string){
+	req, err := http.NewRequest(http.MethodGet, url, nil)
+	if err != nil{
+		log.Fatal(err);
+	}
+
+	res, err := http.DefaultClient.Do(req);
+	if err != nil{
+		log.Fatal(err);
+	}
+
+	if res.StatusCode != 200 {
+		log.Fatal("url is invalid")
+		os.Exit(0)
+	}
+}
+
+
 func crawl(url string){
+	check_url(url);
 	collector := colly.NewCollector(
 		colly.AllowedDomains("www.subtitlestar.com", "subtitlestar.com"),
 	)
