@@ -102,12 +102,15 @@ func main() {
 	if (name == ""){
 		fmt.Println("The movie name is fucking empty");
 		os.Exit(0)
+	}else {
+		fmt.Println(name)
 	}
 	
-	name = string_replace(name, "_", "-")
-	fmt.Println(name)
+	name = strings.ReplaceAll(name, "_", "-")
+	fmt.Println("movie name: ", name)
 	if (url == ""){
 		url = fmt.Sprintf("https://subtitlestar.com/persian-subtitles-%s/", name)
 	}
+	fmt.Println("Crawling ", url)
 	crawl(url);
 }
